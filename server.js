@@ -1,75 +1,50 @@
+var express = require('express');
+var app = express();
+
 var http = require('http');
 var fs = require('fs');
 var path = require('path');
 
 var formidable = require('formidable');
+app.use(express.static(path.join(__dirname, '')));
 
-http.createServer(function (request, response) {
+app.get('/', function(req, res){
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
-    var bFile = false;
-    var filePath = '.' + request.url;
-    if (filePath === './') {
-        filePath = './index.html';
-    } else if (request.url === '/fileupload') {
-        var form = new formidable.IncomingForm();
-        form.parse(request, function (err, fields, files) {
-            var oldpath = files.filetoupload.path;
-            var homedir = require('os').homedir();
-            var newpath = homedir.replace('\\', "/").replace('\\', "/") + '/' + files.filetoupload.name;
-            console.log(newpath);
-            fs.rename(oldpath, newpath, function (err) {
-                if (err) throw err;
-                response.write('File uploaded and moved!');
-                response.end();
-            });
-            response.write('File uploaded');
-            response.end();
+app.post('/fileupload', function(req, res){
+
+    // create an incoming form object
+    var form = new formidable.IncomingForm();
+
+    // specify that we want to allow the user to upload multiple files in a single request
+    form.multiples = true;
+
+    form.uploadDir = path.join(__dirname, '/fileupload');
+
+    // every time a file has been uploaded successfully,
+    // rename it to it's orignal name
+    form.on('file', function(field, file) {
+        fs.rename(file.path, path.join(form.uploadDir, file.name), function () {
+            res.end('success');
         });
-        bFile = true;
+    });
 
-    }
-    var extname = path.extname(filePath);
-    var contentType = 'text/html';
-    switch (extname) {
-        case '.js':
-            contentType = 'text/javascript';
-            break;
-        case '.css':
-            contentType = 'text/css';
-            break;
-        case '.json':
-            contentType = 'application/json';
-            break;
-        case '.png':
-            contentType = 'image/png';
-            break;
-        case '.jpg':
-            contentType = 'image/jpg';
-            break;
-        case '.wav':
-            contentType = 'audio/wav';
-            break;
-    }
-    if(!bFile) {
-        fs.readFile(filePath, function (error, content) {
-            if (error) {
-                if (error.code == 'ENOENT') {
-                    fs.readFile('./404.html', function (error, content) {
-                        response.writeHead(200, {'Content-Type': contentType});
-                        response.end(content, 'utf-8');
-                    });
-                }
-                else {
-                    response.writeHead(500);
-                    response.end('Sorry, check with the site admin for error: ' + error.code + ' ..\n');
-                    response.end();
-                }
-            }
-            else {
-                response.writeHead(200, {'Content-Type': contentType});
-                response.end(content, 'utf-8');
-            }
-        });
-    }
-}).listen(8080);
-console.log('Server running at http://127.0.0.1:8080/');
+    // log any errors that occur
+    form.on('error', function(err) {
+        console.log('An error has occured: \n' + err);
+    });
+
+    // once all the files have been uploaded, send a response to the client
+    form.on('end', function() {
+        res.end('success');
+    });
+
+    // parse the incoming request containing the form data
+    form.parse(req);
+
+});
+
+var server = app.listen(8080, function(){
+    console.log('Server listening on port 8080');
+});
