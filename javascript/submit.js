@@ -22,7 +22,8 @@ function submitFile() {
             contentType: false,
             success: function(data){
                 console.log('upload successful!\n' + data);
-                alert("successfull upload: " + data)
+                alert("successfull upload: " + data);
+                $('#container').show();
             }
         });
 

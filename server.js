@@ -26,7 +26,7 @@ app.post('/fileupload', function(req, res){
     // rename it to it's orignal name
     form.on('file', function(field, file) {
         fs.rename(file.path, path.join(form.uploadDir, file.name), function () {
-            res.end('success');
+
         });
     });
 

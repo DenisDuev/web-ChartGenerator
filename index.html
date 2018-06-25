@@ -18,11 +18,9 @@
     <a href="#intoREST">Lorem</a>
 </div>
 <h2 id="home">Welcome to our chart generator</h2>
-<form enctype="multipart/form-data">
 	<label>Choose files from which to generate chart</label><br>
 	<input id="fileUploadInput" type="file" name="filetoupload"><br>
 	<button onclick="submitFile()">submit</button>
-</form>
 <div id="container" >
 	<div class="block" style="width: 100%; height: 100%; overflow: hidden">
 		<a href="bar.html">
@@ -58,6 +56,7 @@
 	</div>
 </div>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script>$('#container').hide();</script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>
