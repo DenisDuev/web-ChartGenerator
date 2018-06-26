@@ -6,7 +6,7 @@ function visualizeColumns(oData) {
         fieldSet.appendChild(radioBtn);
     }
 
-    document.body.appendChild(fieldSet);
+    document.getElementById("content").appendChild(fieldSet);
 }
 
 function getColumnNames(oData) {
@@ -29,8 +29,7 @@ function getCheckedRadioKey(oData) {
     }
 }
 
-function getDataForColumn(oData) {
-    var sColumn = getCheckedRadioKey(oData);
+function getDataForColumn(oData, sColumn) {
     var aData = [];
     for (var i = 1; i < oData.length; i++) {
         var chunk = oData[i];
