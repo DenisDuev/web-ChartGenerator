@@ -1,12 +1,10 @@
 function visualizeColumns(oData) {
     var columns = oData[0];
-    var fieldSet = document.createElement("fieldset");
+    var fieldSet = document.getElementById("radioFieldset");
     for (var key in columns) {
         var radioBtn = createRadioButton(columns[key], "asd", key);
         fieldSet.appendChild(radioBtn);
     }
-
-    document.getElementById("content").appendChild(fieldSet);
 }
 
 function getColumnNames(oData) {
@@ -29,11 +27,15 @@ function getCheckedRadioKey(oData) {
     }
 }
 
-function getDataForColumn(oData, sColumn) {
+function getDataForColumn(oData, sColumn, iSize) {
+    if (!iSize){
+        iSize = oData.length;
+    }
     var aData = [];
-    for (var i = 1; i < oData.length; i++) {
+    for (var i = 1; i < oData.length && i <= iSize; i++) {
         var chunk = oData[i];
-        aData.push(parseFloat(chunk[sColumn]));
+        var fNumber = parseFloat(chunk[sColumn].replace(",", "."));
+        aData.push(fNumber);
     }
 
     return aData;
@@ -53,6 +55,22 @@ function createRadioButton(sLabel, sName, key){
     div.appendChild(label);
 
     return div;
+}
+
+function changeSlider() {
+    var sliderLabel = document.getElementById("sliderLabel");
+    sliderLabel.innerText = document.getElementById("numberColumnsSlider").value;
+}
+
+function setMaxValueSlider(oData) {
+    var slider = document.getElementById("numberColumnsSlider");
+    slider.setAttribute("max",oData.length - 1);
+    changeSlider();
+}
+
+function getNumberOfRows() {
+    var input = document.getElementById("numberColumnsSlider");
+    return parseInt(input.value);
 }
 
 var aTestData = [
@@ -180,7 +198,7 @@ var aTestData = [
         "FIELD4": "6843",
         "FIELD5": "6322,666667",
         "FIELD6": "7,700811894",
-        "FIELD7": "592370146"
+        "FIELD7": "0,592370146"
     },
     {
         "FIELD1": "14",
@@ -212,3 +230,4 @@ var aTestData = [
 ];
 
 visualizeColumns(aTestData);
+setMaxValueSlider(aTestData);
