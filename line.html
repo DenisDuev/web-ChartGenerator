@@ -22,23 +22,29 @@
 <label>Choose files from which to generate chart</label>
 <input type="file" id="fileUploader" name="source">
 <button>submit</button>
+<button onclick="displayChart()">click</button>
 <div class="chart-container" style="position: relative; height:40vh; width:50vw; margin-left: 20%; margin-right: 20%">
     <canvas id="myChart"></canvas>
 </div>
+<script src="javascript/wizard.js"></script>
 <script src="node_modules/chart.js/dist/Chart.js"></script>
-<script>
-	var chart = createChart();
-	chart.onInit("line");
-	chart.addLabels(["Red", "Blue", "Yellow", "Green", "Purple", "Orange"]);
-	chart.addDataset(0, [12, 19, 3, 5, 2, 3], "test", 1, [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
+<script>function displayChart() {
+    var chart = createChart();
+    chart.onInit("line");
+    //chart.addLabels(getColumnNames(aTestData));
+    chart.addDataset(0,
+        [48689, 25516, 22380, 20466, 17354, 15408, 13259, 11822, 9245, 8458, 7443, 6694, 6322, 5632, 5184, 5172],
+        //getDataForColumn(aTestData),
+        "test", 1, [
+        'rgba(255, 99, 132, 0.4)',
+        'rgba(54, 162, 235, 0.4)',
+        'rgba(255, 206, 86, 0.4)',
+        'rgba(75, 192, 192, 0.4)',
+        'rgba(153, 102, 255, 0.4)',
+        'rgba(255, 159, 64, 0.4)'
     ]);
     chart.addChartIn("myChart");
+}
 </script>
 </body>
 </html>
