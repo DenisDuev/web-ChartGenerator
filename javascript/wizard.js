@@ -199,6 +199,8 @@ var aTestData = [
         "FIELD5": "6322,666667",
         "FIELD6": "7,700811894",
         "FIELD7": "0,592370146"
+        "FIELD7": "592370146"
+
     },
     {
         "FIELD1": "14",
@@ -231,3 +233,4 @@ var aTestData = [
 
 visualizeColumns(aTestData);
 setMaxValueSlider(aTestData);
+
