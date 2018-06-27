@@ -7,6 +7,7 @@
     <script src="javascript/menu.js"></script>
     <script src="javascript/chartGenerator.js"></script>
     <script src="javascript/utils.js"></script>
+    <script src="javascript/convertCSVtoJSON.js"></script>
 </head>
 <body>
 <div class="header">
@@ -30,7 +31,7 @@
 <input id="numberColumnsSlider" type="range" min="1" onchange="changeSlider()">
 <label id="sliderLabel"></label>
 <br>
-<button onclick="displayChart()">generate</button>
+<button onclick="showChart()">generate</button>
 
 <div class="chart-container" style="position: relative; height:40vh; width:50vw; margin-left: 20%; margin-right: 20%">
     <canvas id="myChart"></canvas>
@@ -38,21 +39,41 @@
 <script src="javascript/wizard.js"></script>
 <script src="node_modules/chart.js/dist/Chart.js"></script>
 <script>
-    var url = new URL(window.location.href);
-    var sTypeOfChart = url.searchParams.get("type");
-    document.getElementById("home").innerText = "Generate your " + sTypeOfChart +" chart";
+    function getTypeOfChart() {
+        var url = new URL(window.location.href);
+        return url.searchParams.get("type");
+    }
 
-    function displayChart() {
+    function displayChart(aData) {
+        function getFirstColumn(oObject) {
+            for(var x in oObject){
+                return x;
+            }
+        }
+
         var chart = createChart();
-        chart.onInit(sTypeOfChart);
-        chart.addLabels(getDataForColumn(aTestData, "FIELD1", getNumberOfRows()));
+        chart.onInit(getTypeOfChart());
+        chart.addLabels(getDataForColumn(aData, getFirstColumn(aData[0]), getNumberOfRows()));
         chart.addDataset(
             0,
-            getDataForColumn(aTestData, getCheckedRadioKey(aTestData), getNumberOfRows()),
-            aTestData[0][getCheckedRadioKey(aTestData)],
+            getDataForColumn(aData, getCheckedRadioKey(aData), getNumberOfRows()),
+            aData[0][getCheckedRadioKey(aData)],
             1);
         chart.addChartIn("myChart");
     }
+
+    convert(callBack);
+    function callBack(aTestData) {
+        visualizeColumns(aTestData);
+        setMaxValueSlider(aTestData);
+    }
+
+    document.getElementById("home").innerText = "Generate your " + getTypeOfChart() +" chart";
+
+    function showChart() {
+        convert(displayChart)
+    }
+
 </script>
 </body>
 </html>

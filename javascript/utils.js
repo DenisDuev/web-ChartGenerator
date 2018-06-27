@@ -1,8 +1,8 @@
-function createRadioButton(sLabel, sName, key){
+function createRadioButton(sLabel, sName, sId){
 
     var input = document.createElement("input");
     input.type = "radio";
-    input.id = key;
+    input.id = sId;
     input.name = sName;
     var label = document.createElement("label");
     label.setAttribute("for", sLabel);
