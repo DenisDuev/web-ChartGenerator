@@ -31,6 +31,9 @@
 <input id="numberColumnsSlider" type="range" min="1" onchange="changeSlider()">
 <label id="sliderLabel"></label>
 <br>
+<input id="colorCheckbox" type="checkbox">
+<label for="colorCheckbox">use colors</label>
+<br>
 <button onclick="showChart()">generate</button>
 
 <div class="chart-container" style="position: relative; height:40vh; width:50vw; margin-left: 20%; margin-right: 20%">
@@ -57,13 +60,19 @@
         }
 
         var chart = createChart();
+        var numOfRows = getNumberOfRows();
+        var aColors = [];
+        if(document.getElementById("colorCheckbox").checked){
+            aColors = generateColors(numOfRows);
+        }
         chart.onInit(getTypeOfChart());
-        chart.addLabels(getDataForColumn(aData, getFirstColumn(aData[0]), getNumberOfRows()));
+        chart.addLabels(getDataForColumn(aData, getFirstColumn(aData[0]), numOfRows));
         chart.addDataset(
             0,
-            getDataForColumn(aData, getCheckedRadioKey(aData), getNumberOfRows()),
+            getDataForColumn(aData, getCheckedRadioKey(aData), numOfRows),
             aData[0][getCheckedRadioKey(aData)],
-            1);
+            1,
+            aColors);
         chart.addChartIn("myChart");
     }
 

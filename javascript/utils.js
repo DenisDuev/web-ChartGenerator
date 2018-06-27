@@ -14,3 +14,24 @@ function createRadioButton(sLabel, sName, sId){
 
     return div;
 }
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+function generateColors(iCount) {
+    var aColors = [];
+    if (!iCount){
+        iCount = 1;
+    }
+    for(var i = 0; i < iCount ; i++){
+        aColors.push(getRandomColor())
+    }
+
+    return aColors;
+}
