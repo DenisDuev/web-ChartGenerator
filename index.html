@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="javascript/menu.js"></script>
     <script src="javascript/submit.js"></script>
+    <script src="javascript/utils.js"></script>
 </head>
 <body>
 <div class="header">
@@ -13,50 +14,89 @@
 </div>
 <div id="navbar">
     <a href="index.html">Home</a>
-    <a href="#example">Lorem</a>
+    <a href="generatedDiagrams.html">My diagrams</a>
     <a href="#mockitoAndWeb">Lorem</a>
     <a href="#intoREST">Lorem</a>
 </div>
 <h2 id="home">Welcome to our chart generator</h2>
-	<label>Choose files from which to generate chart</label><br>
-	<input id="fileUploadInput" type="file" name="filetoupload"><br>
-	<button onclick="submitFile()">submit</button>
-<div id="container" >
-	<div class="block" style="width: 100%; height: 100%; overflow: hidden">
-		<a href="simple.html?type=bar">
-			<div class="left-cube forth-cube">
-				<img src="image/barchart.gif" class="in-square">
-				<span style="color: black">Bar</span>
-			</div>
-		</a>
-		<a href="simple.html?type=line">
-			<div class="left-cube forth-cube">
-				<img src="image/linediagram.png" class="in-square">
-				<span style="color: black">Line</span>
-			</div>
-		</a>
-		<a href="simple.html?type=pie">
-			<div class="left-cube forth-cube">
-				<img src="image/piediagram.png" class="in-square">
-				<span style="color: black">Pie</span>
-			</div>
-		</a>
-		<a href="area.html">
-			<div class="left-cube forth-cube">
-				<img src="image/areadiagram.png" class="in-square">
-				<span style="color: black">Area</span>
-			</div>
-		</a>
-		<a href="simple.html?type=doughnut">
-			<div class="left-cube forth-cube">
-				<img src="image/doughnut.png" class="in-square">
-				<span style="color: black">Doughnut</span>
-			</div>
-		</a>
-	</div>
+<div class="container">
+    <div class="block left-cube">
+        <div class="div-header">
+            <span>UPLOAD FILES</span>
+        </div>
+        <br>
+            <label>Choose files from which to generate chart</label>
+        <br>
+            <input id="fileUploadInput" type="file" name="filetoupload">
+        <br>
+            <button onclick="submitFile()">submit</button>
+    </div>
+    <div class="block right-cube">
+        <div class="div-header">
+            <span>Choose from uploaded files</span>
+        </div>
+        <div id="fileFieldset">
+        </div>
+    </div>
 </div>
+
+<div id="container">
+    <div class="block" style="width: 100%; height: 100%; overflow: hidden">
+        <a href="simple.html?type=bar">
+            <div class="left-cube forth-cube">
+                <img src="image/barchart.gif" class="in-square">
+                <span style="color: black">Bar</span>
+            </div>
+        </a>
+        <a href="simple.html?type=line">
+            <div class="left-cube forth-cube">
+                <img src="image/linediagram.png" class="in-square">
+                <span style="color: black">Line</span>
+            </div>
+        </a>
+        <a href="simple.html?type=pie">
+            <div class="left-cube forth-cube">
+                <img src="image/piediagram.png" class="in-square">
+                <span style="color: black">Pie</span>
+            </div>
+        </a>
+        <a href="area.html">
+            <div class="left-cube forth-cube">
+                <img src="image/areadiagram.png" class="in-square">
+                <span style="color: black">Area</span>
+            </div>
+        </a>
+        <a href="simple.html?type=doughnut">
+            <div class="left-cube forth-cube">
+                <img src="image/doughnut.png" class="in-square">
+                <span style="color: black">Doughnut</span>
+            </div>
+        </a>
+    </div>
+</div>
+<script>
+    function disaplyUploadedFiles() {
+        var oFiles = [
+            {
+                name: "file1"
+            },
+            {
+                name: "file2"
+            },
+            {
+                name: "file3"
+            }
+        ];
+        var fieldSet = document.getElementById("fileFieldset");
+        for (var i = 0; i < oFiles.length; i++){
+            var radioBtn = createRadioButton(oFiles[i].name, "uploadedFiles", oFiles[i].name);
+            fieldSet.appendChild(radioBtn);
+        }
+    }
+
+    disaplyUploadedFiles();
+</script>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script>$('#container').hide();</script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>
