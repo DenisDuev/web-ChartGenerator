@@ -21,8 +21,18 @@ function submitFile() {
             processData: false,
             contentType: false,
             success: function(data){
+                function appendLink(sId, sValue){
+                    var sInnerText = document.getElementById(sId).href;
+                    document.getElementById(sId).href = sInnerText + "&file=" + sValue;
+                }
+
                 console.log('upload successful!\n' + data);
                 alert("successfull upload: " + data);
+                var input = document.getElementById("fileUploadInput").files[0].name;
+                appendLink("bar", input);
+                appendLink("line", input);
+                appendLink("pie", input);
+                appendLink("doughnut", input);
                 $('#container').show();
             }
         });

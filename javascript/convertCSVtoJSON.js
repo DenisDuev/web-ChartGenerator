@@ -1,4 +1,4 @@
-function convert(callBack) {
+function convert(sUrl, callBack) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -23,6 +23,6 @@ function convert(callBack) {
             callBack(result);
         }
     };
-    xhttp.open("GET", "testData/data.csv", false);
+    xhttp.open("GET", "testData/" + sUrl, true);
     xhttp.send();
 }

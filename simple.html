@@ -44,6 +44,11 @@
         return url.searchParams.get("type");
     }
 
+    function getFileName() {
+        var url = new URL(window.location.href);
+        return url.searchParams.get("file");
+    }
+
     function displayChart(aData) {
         function getFirstColumn(oObject) {
             for(var x in oObject){
@@ -62,7 +67,7 @@
         chart.addChartIn("myChart");
     }
 
-    convert(callBack);
+    convert(getFileName(), callBack);
     function callBack(aTestData) {
         visualizeColumns(aTestData);
         setMaxValueSlider(aTestData);
@@ -71,7 +76,7 @@
     document.getElementById("home").innerText = "Generate your " + getTypeOfChart() +" chart";
 
     function showChart() {
-        convert(displayChart)
+        convert(getFileName(), displayChart)
     }
 
 </script>
