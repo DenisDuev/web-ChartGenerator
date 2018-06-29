@@ -7,6 +7,15 @@ function visualizeColumns(oData) {
     }
 }
 
+function visualizeCheckboxColumns(oData) {
+    var columns = oData[0];
+    var fieldSet = document.getElementById("radioFieldset");
+    for (var key in columns) {
+        var radioBtn = createCheckboxButton(columns[key], "check", key);
+        fieldSet.appendChild(radioBtn);
+    }
+}
+
 function getColumnNames(oData) {
     var aColumnNames = [];
     var columns = oData[0];

@@ -7,6 +7,7 @@ function createChart() {
         onInit: function (sType) {
             this.type = sType;
             if (sType === "area") {
+                this.type = "line";
                 this.options = {
                     scales: {
                         yAxes: [{

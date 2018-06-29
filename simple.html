@@ -42,16 +42,6 @@
 <script src="javascript/wizard.js"></script>
 <script src="node_modules/chart.js/dist/Chart.js"></script>
 <script>
-    function getTypeOfChart() {
-        var url = new URL(window.location.href);
-        return url.searchParams.get("type");
-    }
-
-    function getFileName() {
-        var url = new URL(window.location.href);
-        return url.searchParams.get("file");
-    }
-
     function displayChart(aData) {
         function getFirstColumn(oObject) {
             for(var x in oObject){
