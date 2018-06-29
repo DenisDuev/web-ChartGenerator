@@ -26,3 +26,14 @@ function convert(sUrl, callBack) {
     xhttp.open("GET", "testData/" + sUrl, true);
     xhttp.send();
 }
+
+function getJsonFile(sUrl, callBack) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            callBack(JSON.parse(this.responseText));
+        }
+    };
+    xhttp.open("GET", "testData/" + sUrl, true);
+    xhttp.send();
+}

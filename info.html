@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chart generator</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="javascript/menu.js"></script>
+</head>
+<body>
+<div class="header">
+    <h1>Chart generator</h1>
+</div>
+<div id="navbar">
+    <a href="index.html">Home</a>
+    <a href="generatedDiagrams.html">My diagrams</a>
+    <a href="#mockitoAndWeb">Lorem</a>
+    <a href="info.html">Info</a>
+</div>
+<h2 id="home">Here is some info about our project</h2>
+<div class="container">
+    <h1>Supported file formats:</h1>
+    <h2>cvs</h2>
+    <pre>
+    <code>
+Брой нишки,Тест 1,Тест 2,Тест 3,Средно време в miliseconds,Ускорение(S(p)), Ефективност (Е(р))
+1,48870,48563,48636,48689.66667,1,1
+2,25494,25459,25596,25516.33333,1.908176463,0.954088231
+3,22256,22873,22013,22380.66667,2.175523517,0.725174506
+4,20816,20330,20253,20466.33333,2.379012688,0.594753172
+5,17492,17077,17495,17354.66667,2.805566226,0.561113245
+6,15333,15208,15684,15408.33333,3.159956734,0.561113245
+7,13175,13447,13156,13259.33333,3.672105185,0.526659456
+8,11725,11755,11987,11822.33333,4.118448136,0.514806017
+9,9253,9314,9170,9245.666667,5.266214804,0.585134978
+10,8559,8186,8629,8458,5.756640656,0.575664066
+11,7270,7669,7392,7443.666667,6.541086383,0.594644217
+12,6700,6782,6602,6694.666667,7.272903801,0.606075317
+13,6116,6009,6843,6322.666667,7.700811894,592370146
+14,5864,5149,5883,5632,8.645182292,0.617513021
+15,5337,5125,5092,5184.666667,9.361089109,0.626072607
+16,5036,5393,5088,5172.333333,9.413481989,0.588342624
+    </code>
+    </pre>
+    <h2>json</h2>
+    <pre>
+    <code>
+[
+    {
+        "FIELD1": "Брой нишки",
+        "FIELD2": "Тест 1",
+        "FIELD3": "Тест 2",
+        "FIELD4": "Тест 3",
+        "FIELD5": "Средно време в miliseconds",
+        "FIELD6": "Ускорение(S(p))",
+        "FIELD7": " Ефективност (Е(р))"
+    },
+    {
+        "FIELD1": "1",
+        "FIELD2": "48870",
+        "FIELD3": "48563",
+        "FIELD4": "48636",
+        "FIELD5": "48689,66667",
+        "FIELD6": "1",
+        "FIELD7": "1"
+    },
+    {
+        "FIELD1": "2",
+        "FIELD2": "25494",
+        "FIELD3": "25459",
+        "FIELD4": "25596",
+        "FIELD5": "25516,33333",
+        "FIELD6": "1,908176463",
+        "FIELD7": "0,954088231"
+    },
+    {
+        "FIELD1": "3",
+        "FIELD2": "22256",
+        "FIELD3": "22873",
+        "FIELD4": "22013",
+        "FIELD5": "22380,66667",
+        "FIELD6": "2,175523517",
+        "FIELD7": "0,725174506"
+    },
+    {
+        "FIELD1": "4",
+        "FIELD2": "20816",
+        "FIELD3": "20330",
+        "FIELD4": "20253",
+        "FIELD5": "20466,33333",
+        "FIELD6": "2,379012688",
+        "FIELD7": "0,594753172"
+    },
+    {
+        "FIELD1": "5",
+        "FIELD2": "17492",
+        "FIELD3": "17077",
+        "FIELD4": "17495",
+        "FIELD5": "17354,66667",
+        "FIELD6": "2,805566226",
+        "FIELD7": "0,561113245"
+    }
+]
+    </code>
+    </pre>
+    <h2>Used technologies</h2>
+    <h3>
+    <a href="https://www.chartjs.org/">ChartJS</a> used to generate charts from JS object
+    </h3>
+    <br>
+    <a href="https://www.chartjs.org/">
+    <img src="https://www.chartjs.org/img/chartjs-logo.svg" class="in-square"/>
+    </a>
+</div>
+</body>
+</html>

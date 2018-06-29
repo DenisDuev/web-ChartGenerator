@@ -76,7 +76,13 @@
         chart.addChartIn("myChart");
     }
 
-    convert(getFileName(), callBack);
+    var sFileName = getFileName();
+    if (sFileName.endsWith(".csv")){
+        convert(sFileName, callBack);
+    } else {
+        getJsonFile(sFileName, callBack);
+    }
+
     function callBack(aTestData) {
         visualizeColumns(aTestData);
         setMaxValueSlider(aTestData);
@@ -85,7 +91,13 @@
     document.getElementById("home").innerText = "Generate your " + getTypeOfChart() +" chart";
 
     function showChart() {
-        convert(getFileName(), displayChart)
+        var sFileName = getFileName();
+        if (sFileName.endsWith(".csv")) {
+            convert(sFileName, displayChart)
+        } else {
+            getJsonFile(sFileName, displayChart);
+        }
+
     }
 
 </script>
