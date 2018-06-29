@@ -37,6 +37,7 @@
         </div>
         <div id="fileFieldset">
         </div>
+        <button onclick="showDiagramsWithFileList()">submit</button>
     </div>
 </div>
 
@@ -89,6 +90,25 @@
     }
 
     disaplyUploadedFiles();
+
+    function showDiagramsWithFileList() {
+        var fileName;
+        var inputChildren = document.getElementById("fileFieldset").children;
+        for (var child in inputChildren){
+            var divChildren = inputChildren[child].children;
+            var input = divChildren[0];
+            if (input.checked){
+                fileName = input.id;
+                break;
+            }
+        }
+        appendLink("bar", fileName, "&");
+        appendLink("line", fileName,"&");
+        appendLink("pie", fileName, "&");
+        appendLink("doughnut", fileName, "&");
+        appendLink("area", fileName, "?");
+        $('#container').show();
+    }
 </script>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script>$('#container').hide();</script>

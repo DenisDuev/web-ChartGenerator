@@ -63,3 +63,8 @@ function getFiles(callBack) {
     xhttp.open("GET", "/files", true);
     xhttp.send();
 }
+
+function appendLink(sId, sValue, sParam){
+    var sInnerText = document.getElementById(sId).href;
+    document.getElementById(sId).href = sInnerText + sParam + "file=" + sValue;
+}
