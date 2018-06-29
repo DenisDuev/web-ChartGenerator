@@ -45,6 +45,14 @@ app.post('/fileupload', function(req, res){
 
 });
 
+app.get('/files', function (req, res) {
+    fs.readdir("fileupload", function(err, items) {
+        console.log(items);
+        res.write(JSON.stringify(items));
+        res.end();
+    });
+});
+
 var server = app.listen(8080, function(){
     console.log('Server listening on port 8080');
 });

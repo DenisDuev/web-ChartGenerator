@@ -76,21 +76,15 @@
 </div>
 <script>
     function disaplyUploadedFiles() {
-        var oFiles = [
-            {
-                name: "file1"
-            },
-            {
-                name: "file2"
-            },
-            {
-                name: "file3"
+
+        getFiles(addFiles);
+
+        function addFiles(oFiles) {
+            var fieldSet = document.getElementById("fileFieldset");
+            for (var i = 0; i < oFiles.length; i++) {
+                var radioBtn = createRadioButton(oFiles[i], "uploadedFiles", oFiles[i]);
+                fieldSet.appendChild(radioBtn);
             }
-        ];
-        var fieldSet = document.getElementById("fileFieldset");
-        for (var i = 0; i < oFiles.length; i++){
-            var radioBtn = createRadioButton(oFiles[i].name, "uploadedFiles", oFiles[i].name);
-            fieldSet.appendChild(radioBtn);
         }
     }
 
