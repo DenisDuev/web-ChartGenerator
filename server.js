@@ -1,5 +1,31 @@
 var express = require('express');
+var bodyParser=require('body-parser');
+var connection = require('./db_connection');
 var app = express();
+
+var authenticate = require('./javascript/authenticate');
+var registration = require('./javascript/registration');
+
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}));
+
+app.get('/',function (req, res) {
+    res.sendFile(__dirname + "/" + "registration.html");
+})
+
+app.get('/lohin.html',function (req, res) {
+    res.sendFile(__dirname + "/" + "login.html");
+})
+
+app.post('/api/registration', registration.register);
+app.post('/api/authenticate',authenticate.authenticate);
+
+console.log(authenticate);
+app.post('/javascript/registration', registration.register);
+app.post('/javascript/authenticate', authenticate.authenticate);
+
+
 
 var http = require('http');
 var fs = require('fs');
@@ -45,14 +71,9 @@ app.post('/fileupload', function(req, res){
 
 });
 
-app.get('/files', function (req, res) {
-    fs.readdir("fileupload", function(err, items) {
-        console.log(items);
-        res.write(JSON.stringify(items));
-        res.end();
-    });
-});
 
-var server = app.listen(8080, function(){
+
+
+var server = app.listen(8012, function(){
     console.log('Server listening on port 8080');
 });
