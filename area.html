@@ -31,9 +31,6 @@
 <input id="numberColumnsSlider" type="range" min="1" onchange="changeSlider()">
 <label id="sliderLabel"></label>
 <br>
-<input id="colorCheckbox" type="checkbox">
-<label for="colorCheckbox">use colors</label>
-<br>
 <button onclick="showChart()">generate</button>
 
 <div class="chart-container" style="position: relative; height:40vh; width:50vw; margin-left: 20%; margin-right: 20%">
@@ -42,14 +39,6 @@
 <script src="javascript/wizard.js"></script>
 <script src="node_modules/chart.js/dist/Chart.js"></script>
 <script>
-    function updateColor(numOfRows) {
-        var aColors = [];
-        if (document.getElementById("colorCheckbox").checked) {
-            aColors = generateColors(numOfRows);
-        }
-        return aColors;
-    }
-
     function displayChart(aData) {
         function getFirstColumn(oObject) {
             for(var x in oObject){
@@ -72,8 +61,8 @@
                     getDataForColumn(aData, key, numOfRows),
                     aData[0][key],
                     1,
-                    updateColor(numOfRows),
-                    updateColor(numOfRows));
+                    getRandomColor(),
+                    getRandomColor());
                 index++;
             }
         }
