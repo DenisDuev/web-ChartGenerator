@@ -16,10 +16,10 @@ module.exports.authenticate = function (req, res) {
         }else {
             if(results.length > 0) {
                 console.log(results);
-                    res.json({
-                        status : true,
-                        massage : 'Successfully authenticated!'
-                    })
+                res.write(JSON.stringify({
+                    status : true,
+                    massage : 'Successfully authenticated!'}));
+                res.end();
             }else {
                 console.log(results);
                 res.json({
