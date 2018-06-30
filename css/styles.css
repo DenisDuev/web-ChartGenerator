@@ -181,3 +181,46 @@ img.in-square {
     height: 60%;
     margin: 5% 15%;
 }
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+}
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+#user {
+    float: right;
+}
+input {
+    padding: 1% 2%;
+    margin: 1% 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+input[type=submit]{
+    font-size: large;
+    background-color: rgb(120, 164, 64);
+    color: white;
+}
+
+input[type=button]{
+    font-size: large;
+    background-color: rgb(120, 164, 64);
+    color: white;
+}
+#reg {
+	text-decoration: none;
+	background-color: none;
+    color: black;
+	font-size: large;
+}
