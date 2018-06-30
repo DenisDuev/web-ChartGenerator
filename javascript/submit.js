@@ -20,7 +20,7 @@ function submitFile() {
             data: formData,
             processData: false,
             contentType: false,
-            success: function(data){
+            success: function(){
                 var input = document.getElementById("fileUploadInput").files[0].name;
                 appendLink("bar", input, "&");
                 appendLink("line", input,"&");

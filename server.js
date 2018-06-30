@@ -1,5 +1,10 @@
 var express = require('express');
+var bodyParser=require('body-parser');
+const mysql = require('mysql');
 var app = express();
+
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 
 var http = require('http');
 var fs = require('fs');
@@ -9,7 +14,7 @@ var formidable = require('formidable');
 app.use(express.static(path.join(__dirname, '')));
 
 app.get('/', function(req, res){
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'login.html'));
 });
 
 app.post('/fileupload', function(req, res){
@@ -52,6 +57,51 @@ app.get('/files', function (req, res) {
         res.end();
     });
 });
+
+// Create connection
+var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : '',
+    database : 'mydb'
+});
+
+// Connect
+connection.connect(function(err){
+    if(!err) {
+        console.log("Database is connected");
+    } else {
+        console.log("Error while connecting with database");
+    }
+});
+module.exports = connection;
+
+
+// Create DB
+app.get('/createdb', (req, res) => {
+    let sql = 'CREATE DATABASE mydb';
+    connection.query(sql, (err, result, fields) => {
+        if(err) throw err;
+        console.log(result);
+        res.send('Database created...');
+    });
+});
+
+// Create table
+app.get('/createuserstable', (req, res) => {
+    let sql = 'CREATE TABLE users(id int(11) NOT NULL AUTO_INCREMENT, username varchar(255) NOT NULL, password varchar(255) NOT NULL, created_at datetime NOT NULL, updated_at datetime NOT NULL, PRIMARY KEY (id))';
+    connection.query(sql, (err, result, fields) => {
+        if(err) throw err;
+        console.log(result);
+        res.send('Users table created...');
+    });
+});
+
+var authenticate = require('./javascript/authenticate');
+var registration = require('./javascript/registration');
+
+app.post('/javascript/registration', registration.register);
+app.post('/javascript/authenticate',authenticate.authenticate);
 
 var server = app.listen(8080, function(){
     console.log('Server listening on port 8080');

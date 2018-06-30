@@ -7,7 +7,7 @@
     <script src="javascript/menu.js"></script>
     <script src="javascript/submit.js"></script>
     <script src="javascript/utils.js"></script>
-	<script src="javascript/authenticate.js"></script>
+    <script src="javascript/authenticate.js"></script>
 </head>
 <body>
 <div class="header">
@@ -15,28 +15,54 @@
 </div>
 
 <div id="navbar">
-    <a href="index.html">Home</a>
+    <a href="home.html">Home</a>
     <a href="generatedDiagrams.html">My diagrams</a>
     <a href="#mockitoAndWeb">Lorem</a>
     <a href="#intoREST">Lorem</a>
-	<ul>
-	<li id="user"><a href="login.html"><img src="image/user_icon.png" alt="user" height="26" width="26"></a></li>
-	</ul>
+    <ul>
+        <li id="user"><a href="login.html"><img src="image/user_icon.png" alt="user" height="26" width="26"></a></li>
+    </ul>
 </div>
-	<div id="container">
+<div id="container">
     <div style="float: left; width: 25%; height: 80%;"><span style="color: white">.</span></div>
     <div class="block" style="overflow: hidden">
         <div class="header">
             <span>LOGIN</span>
         </div>
         <div class="center" style="border: none;">
-            <form id="loginForm" action="/javascript/authenticate" method="POST">
-                <input type="text" placeholder="username" id="username"/><br>
-                <input type="password" placeholder="password" id="password"/><br>
-                <input type="submit" value="LOGIN"/>
-            </form>
-			<a id="reg" href="registration.html">Create your account!</a>
+            <input type="text" placeholder="username" id="username" name="username"/><br>
+            <input type="password" placeholder="password" id="password" name="password"/><br>
+            <input type="submit" value="LOGIN" onclick="logIn()"/>
+            <a id="reg" href="registration.html">Create your account!</a>
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+</body>
+<script>
+    function logIn() {
+        var user = document.getElementById("username").value;
+        var pass = document.getElementById("password").value;
+
+        var data = JSON.stringify({
+            "username": user,
+            "password": pass
+        });
+        $.ajax({
+            url: '/javascript/authenticate',
+            type: 'POST',
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
+                var res = JSON.parse(data);
+                if (res.status === true){
+                    var location = window.location.href;
+                    window.location.href = location + "/home.html";
+                } else {
+                    alert("login failed");
+                }
+            }
+        });
+    }
+</script>
 </html>
