@@ -33,6 +33,7 @@
             <input type="text" placeholder="username" id="username" name="username"/><br>
             <input type="password" placeholder="password" id="password" name="password"/><br>
             <input type="submit" value="LOGIN" onclick="logIn()"/>
+            <br>
             <a id="reg" href="registration.html">Create your account!</a>
         </div>
     </div>
@@ -57,6 +58,7 @@
                 var res = JSON.parse(data);
                 if (res.status === true){
                     var location = window.location.href;
+                    location = location.replace("/login.html", "");
                     window.location.href = location + "/home.html";
                 } else {
                     alert("login failed");

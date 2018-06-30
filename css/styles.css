@@ -159,7 +159,7 @@ div.block {
 }
 div.container {
     width: 100%;
-    height: 20vh;
+    height: 28vh;
     margin: 2% auto auto;
 }
 
@@ -200,12 +200,6 @@ li a {
 #user {
     float: right;
 }
-input {
-    padding: 1% 2%;
-    margin: 1% 0;
-    box-sizing: border-box;
-    border-radius: 10px;
-}
 
 input[type=submit]{
     font-size: large;
@@ -223,4 +217,25 @@ input[type=button]{
 	background-color: none;
     color: black;
 	font-size: large;
+}
+
+input {
+    padding: 1% 2%;
+    margin: 2% 0;
+    border:2px solid rgb(120, 164, 64);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+button {
+    font-size: large;
+    background-color: rgb(120, 164, 64);
+    color: white;
+    border:2px solid rgb(120, 164, 64);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+input[type=text]:focus {
+    border-color:#333;
 }
