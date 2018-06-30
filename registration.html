@@ -33,7 +33,7 @@
 
             <input type="text" placeholder="username" id="username"/><br>
             <input type="password" placeholder="password" id="password"/><br>
-            <input type="confirm_password" placeholder="confirm password" id="confirm_password"/><br>
+			<input type="confirm_password" placeholder="ConfirmPassword" id="confirm_password"/><br>
             <input type="submit" value="REGISTRATION" onclick="register()"/>
 
         </div>
@@ -42,14 +42,15 @@
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 </body>
 <script>
+
     function register() {
         var user = document.getElementById("username").value;
         var pass = document.getElementById("password").value;
-        
-        if (!isPasswordValid(pass)) {
+
+		if (!isPasswordValid(pass)) {
                 return;
             }
-
+		
         var data = JSON.stringify({
             "username": user,
             "password": pass
@@ -71,8 +72,7 @@
             }
         });
     }
-    
-    function isPasswordValid(pass) {
+	function isPasswordValid(pass) {
             var confirmPass = document.getElementById("confirm_password").value;
 
             if (pass == "" || confirmPass == "") {
