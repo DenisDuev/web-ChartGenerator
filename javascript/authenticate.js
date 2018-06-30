@@ -1,12 +1,12 @@
 var connection = require('./../server');
 
 module.exports.authenticate = function (req, res) {
-    //let username = req.body.username;
-    //let password = req.body.password;
+    let username = req.body.username;
+    let password = req.body.password;
 
     //console.log(username);
     console.log(req.body);
-    connection.query('SELECT * FROM users WHERE username = ? AND password = ?',['asd', 'asd'], function (error, results, fields) {
+    connection.query('SELECT * FROM users WHERE username = ? AND password = ?',[username, password], function (error, results, fields) {
         if(error) {
             res.json({
                 status : false,
@@ -21,10 +21,11 @@ module.exports.authenticate = function (req, res) {
                 res.end();
             }else {
                 console.log(results);
-                res.json({
+                res.json(JSON.stringify({
                     status : false,
                     massage : 'User does not exits!'
-                });
+                }));
+                res.end();
             }
         }
     });

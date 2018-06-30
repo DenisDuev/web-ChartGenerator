@@ -15,7 +15,7 @@
 </div>
 
 <div id="navbar">
-    <a href="index.html">Home</a>
+    <a href="home.html">Home</a>
     <a href="generatedDiagrams.html">My diagrams</a>
     <a href="#mockitoAndWeb">Lorem</a>
     <a href="#intoREST">Lorem</a>
@@ -57,7 +57,7 @@
                 var res = JSON.parse(data);
                 if (res.status === true){
                     var location = window.location.href;
-                    window.location.href = location.replace("/login", "/index");
+                    window.location.href = location + "/home.html";
                 } else {
                     alert("login failed");
                 }

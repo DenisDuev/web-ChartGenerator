@@ -3,12 +3,8 @@ var bodyParser=require('body-parser');
 const mysql = require('mysql');
 var app = express();
 
-//app.use(bodyParser.urlencoded({extended:true}));
-//app.use(bodyParser.json());
-
-app.get('/lohin.html',function (req, res) {
-    res.sendFile(__dirname + "/" + "login.html");
-});
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 
 var http = require('http');
 var fs = require('fs');
@@ -18,7 +14,7 @@ var formidable = require('formidable');
 app.use(express.static(path.join(__dirname, '')));
 
 app.get('/', function(req, res){
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'login.html'));
 });
 
 app.post('/fileupload', function(req, res){
