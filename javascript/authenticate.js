@@ -1,10 +1,13 @@
-var connection = require('./../db_connection');
+var connection = require('./../server');
 
 module.exports.authenticate = function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
 
-    connection.query('SELECT * FROM users WHERE username = ?',[username], function (error, results, fields) {
+    console.log(username);
+    console.log(req.body);
+    console.log(req);
+    connection.query('SELECT * FROM users WHERE username = ? AND password = ?',[username, password], function (error, results, fields) {
         if(error) {
             res.json({
                 status : false,
@@ -12,18 +15,13 @@ module.exports.authenticate = function (req, res) {
             })
         }else {
             if(results.length > 0) {
-                if(password == results[0].password){
+                console.log(results);
                     res.json({
                         status : true,
                         massage : 'Successfully authenticated!'
                     })
-                }else {
-                    res.json({
-                        status : false,
-                        massage : 'User and password does not match!'
-                    });
-                }
             }else {
+                console.log(results);
                 res.json({
                     status : false,
                     massage : 'User does not exits!'

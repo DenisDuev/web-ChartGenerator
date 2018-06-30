@@ -1,31 +1,15 @@
 var express = require('express');
 var bodyParser=require('body-parser');
-var connection = require('./db_connection');
+const mysql = require('mysql');
 var app = express();
-
-var authenticate = require('./javascript/authenticate');
-var registration = require('./javascript/registration');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
 
-app.get('/',function (req, res) {
-    res.sendFile(__dirname + "/" + "registration.html");
-})
-
 app.get('/lohin.html',function (req, res) {
     res.sendFile(__dirname + "/" + "login.html");
-})
-
-app.post('/api/registration', registration.register);
-app.post('/api/authenticate',authenticate.authenticate);
-
-console.log(authenticate);
-app.post('/javascript/registration', registration.register);
-app.post('/javascript/authenticate', authenticate.authenticate);
-
-
+});
 
 var http = require('http');
 var fs = require('fs');
@@ -71,9 +55,59 @@ app.post('/fileupload', function(req, res){
 
 });
 
+app.get('/files', function (req, res) {
+    fs.readdir("fileupload", function(err, items) {
+        console.log(items);
+        res.write(JSON.stringify(items));
+        res.end();
+    });
+});
+
+// Create connection
+var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : '',
+    database : 'mydb'
+});
+
+// Connect
+connection.connect(function(err){
+    if(!err) {
+        console.log("Database is connected");
+    } else {
+        console.log("Error while connecting with database");
+    }
+});
+module.exports = connection;
 
 
+// Create DB
+app.get('/createdb', (req, res) => {
+    let sql = 'CREATE DATABASE mydb';
+    connection.query(sql, (err, result, fields) => {
+        if(err) throw err;
+        console.log(result);
+        res.send('Database created...');
+    });
+});
 
-var server = app.listen(8012, function(){
+// Create table
+app.get('/createuserstable', (req, res) => {
+    let sql = 'CREATE TABLE users(id int(11) NOT NULL AUTO_INCREMENT, username varchar(255) NOT NULL, password varchar(255) NOT NULL, created_at datetime NOT NULL, updated_at datetime NOT NULL, PRIMARY KEY (id))';
+    connection.query(sql, (err, result, fields) => {
+        if(err) throw err;
+        console.log(result);
+        res.send('Users table created...');
+    });
+});
+
+var authenticate = require('./javascript/authenticate');
+var registration = require('./javascript/registration');
+
+app.post('/javascript/registration', registration.register);
+app.post('/javascript/authenticate',authenticate.authenticate);
+
+var server = app.listen(8080, function(){
     console.log('Server listening on port 8080');
 });
