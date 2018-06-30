@@ -3,7 +3,7 @@ var bodyParser=require('body-parser');
 const mysql = require('mysql');
 var app = express();
 
-app.use(bodyParser.urlencoded({extended:true}));
+//app.use(bodyParser.urlencoded({extended:true}));
 //app.use(bodyParser.json());
 
 app.get('/lohin.html',function (req, res) {

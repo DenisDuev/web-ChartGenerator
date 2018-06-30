@@ -37,20 +37,32 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 </body>
 <script>
     function logIn() {
-        var user = document.getElementById("username");
-        var pass = document.getElementById("password");
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var location = window.location.href;
-                window.location.href = location.replace("/login", "/index")
+        var user = document.getElementById("username").value;
+        var pass = document.getElementById("password").value;
+
+        var data = JSON.stringify({
+            "username": user,
+            "password": pass
+        });
+        $.ajax({
+            url: '/javascript/authenticate',
+            type: 'POST',
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
+                var res = JSON.parse(data);
+                if (res.status === true){
+                    var location = window.location.href;
+                    window.location.href = location.replace("/login", "/index");
+                } else {
+                    alert("login failed");
+                }
             }
-        };
-        xhttp.open("POST", "/javascript/authenticate", true);
-        xhttp.send([user, pass]);
+        });
     }
 </script>
 </html>

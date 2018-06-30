@@ -1,13 +1,12 @@
 var connection = require('./../server');
 
 module.exports.authenticate = function (req, res) {
-    let username = req.body.username;
-    let password = req.body.password;
+    //let username = req.body.username;
+    //let password = req.body.password;
 
-    console.log(username);
+    //console.log(username);
     console.log(req.body);
-    console.log(req);
-    connection.query('SELECT * FROM users WHERE username = ? AND password = ?',[username, password], function (error, results, fields) {
+    connection.query('SELECT * FROM users WHERE username = ? AND password = ?',['asd', 'asd'], function (error, results, fields) {
         if(error) {
             res.json({
                 status : false,
@@ -15,7 +14,7 @@ module.exports.authenticate = function (req, res) {
             })
         }else {
             if(results.length > 0) {
-                console.log(results);
+                //console.log(results);
                 res.write(JSON.stringify({
                     status : true,
                     massage : 'Successfully authenticated!'}));
