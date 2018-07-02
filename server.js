@@ -11,7 +11,6 @@ var fs = require('fs');
 var path = require('path');
 
 var formidable = require('formidable');
-app.use(express.static(path.join(__dirname, '')));
 
 function getValueOfStringCookie(sCookie, sKey) {
     if (!sCookie){
@@ -27,10 +26,26 @@ function getValueOfStringCookie(sCookie, sKey) {
     }
 }
 
-app.get('/*', function(req,res){
+app.get('/*', function(req, res, next){
+    if (req.url === '/' || req.url === '/login.html' || req.url === '/css/styles.css') return next();
     var username = getValueOfStringCookie(req.headers.cookie, "username=");
     var password = getValueOfStringCookie(req.headers.cookie, "password=");
     console.log(username + " " + password);
+    connection.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], function (error, results, fields) {
+        if (error) {
+            res.json({
+                status: false,
+                massage: 'There are some error with query!'
+            });
+            res.end();
+        } else {
+            if (results.length > 0) {
+               next();
+            } else {
+                res.redirect("login.html");
+            }
+        }
+    });
 });
 
 app.get('/', function(req, res){
@@ -78,6 +93,8 @@ app.get('/files', function (req, res) {
         res.end();
     });
 });
+
+app.use(express.static(path.join(__dirname, '')));
 
 // Create connection
 var connection = mysql.createConnection({
