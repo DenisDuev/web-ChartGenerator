@@ -13,10 +13,29 @@ var path = require('path');
 var formidable = require('formidable');
 app.use(express.static(path.join(__dirname, '')));
 
+function getValueOfStringCookie(sCookie, sKey) {
+    if (!sCookie){
+        return "";
+    }
+    var cut = sCookie.split(" ");
+    console.log(cut);
+    for (var e in cut){
+        console.log(cut[e]);
+        if (cut[e].includes(sKey)){
+            return cut[e].split("=")[1];
+        }
+    }
+}
+
+app.get('/*', function(req,res){
+    var username = getValueOfStringCookie(req.headers.cookie, "username=");
+    var password = getValueOfStringCookie(req.headers.cookie, "password=");
+    console.log(username + " " + password);
+});
+
 app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, 'login.html'));
 });
-
 app.post('/fileupload', function(req, res){
 
     // create an incoming form object

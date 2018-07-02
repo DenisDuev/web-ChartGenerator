@@ -14,8 +14,6 @@ module.exports.authenticate = function (req, res) {
             })
         } else {
             if (results.length > 0) {
-                res.setHeader('Set-Cookie', "username=" + username);
-                res.setHeader('Set-Cookie', "password=" + password);
                 //console.log(results);
                 res.write(JSON.stringify({
                     status: true,

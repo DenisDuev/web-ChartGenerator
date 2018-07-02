@@ -55,7 +55,7 @@
             success: function(data){
                 var res = JSON.parse(data);
                 if (res.status === true){
-                    document.cookie = "username=" + res.username + ", password=" + res.password;
+                    document.cookie = "username=" + res.username + " password=" + res.password;
                     var location = window.location.href;
                     location = location.replace("/login.html", "");
                     window.location.href = location + "/home.html";
