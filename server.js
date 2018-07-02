@@ -17,9 +17,9 @@ function getValueOfStringCookie(sCookie, sKey) {
         return "";
     }
     var cut = sCookie.split(" ");
-    console.log(cut);
+    //console.log(cut);
     for (var e in cut){
-        console.log(cut[e]);
+        //console.log(cut[e]);
         if (cut[e].includes(sKey)){
             return cut[e].split("=")[1];
         }
@@ -30,7 +30,7 @@ app.get('/*', function(req, res, next){
     if (req.url === '/' || req.url === '/login.html' || req.url === '/css/styles.css') return next();
     var username = getValueOfStringCookie(req.headers.cookie, "username=");
     var password = getValueOfStringCookie(req.headers.cookie, "password=");
-    console.log(username + " " + password);
+    //console.log(username + " " + password);
     connection.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], function (error, results, fields) {
         if (error) {
             res.json({
@@ -64,9 +64,8 @@ app.post('/fileupload', function(req, res){
     // every time a file has been uploaded successfully,
     // rename it to it's orignal name
     form.on('file', function(field, file) {
-        console.log(req.headers.cookies);
-        console.log(req.headers);
-        fs.rename(file.path, path.join(form.uploadDir, file.name), function () {
+        var username = getValueOfStringCookie(req.headers.cookie, "username=");
+        fs.rename(file.path, path.join(form.uploadDir, username + "_" + file.name), function () {
 
         });
     });
@@ -88,8 +87,16 @@ app.post('/fileupload', function(req, res){
 
 app.get('/files', function (req, res) {
     fs.readdir("fileupload", function(err, items) {
-        console.log(items);
-        res.write(JSON.stringify(items));
+        var username = getValueOfStringCookie(req.headers.cookie, "username=");
+        var result = [];
+        for (var i in items){
+            var item = items[i];
+            if (item.includes(username)) {
+                item =
+                result.push(item.replace(username + "_", ""));
+            }
+        }
+        res.write(JSON.stringify(result));
         res.end();
     });
 });
