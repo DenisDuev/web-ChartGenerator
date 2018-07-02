@@ -27,7 +27,7 @@ function getValueOfStringCookie(sCookie, sKey) {
 }
 
 app.get('/*', function(req, res, next){
-    if (req.url === '/' || req.url === '/login.html' || req.url === '/css/styles.css') return next();
+    if (req.url === '/' || req.url === '/login.html' || req.url === '/css/styles.css' || req.url === '/createuserstable') return next();
     var username = getValueOfStringCookie(req.headers.cookie, "username=");
     var password = getValueOfStringCookie(req.headers.cookie, "password=");
     //console.log(username + " " + password);
@@ -111,12 +111,30 @@ var connection = mysql.createConnection({
     database : 'mydb'
 });
 
+function initDb() {
+    console.log("init db");
+    var newConnection = mysql.createConnection({
+        host     : 'localhost',
+        user     : 'root',
+        password : ''
+    });
+
+    var sql = 'CREATE DATABASE mydb';
+    newConnection.query(sql, (err, result, fields) => {
+        if(err) {
+            console.log(err);
+        }
+    console.log(result);
+    connection.connect();
+    });
+}
+
 // Connect
 connection.connect(function(err){
     if(!err) {
         console.log("Database is connected");
     } else {
-        console.log(err);
+        initDb();
         console.log("Error while connecting with database");
     }
 });
