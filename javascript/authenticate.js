@@ -19,7 +19,9 @@ module.exports.authenticate = function (req, res) {
                 //console.log(results);
                 res.write(JSON.stringify({
                     status: true,
-                    massage: 'Successfully authenticated!'
+                    massage: 'Successfully authenticated!',
+                    username: username,
+                    password: password
                 }));
                 res.end();
             } else {

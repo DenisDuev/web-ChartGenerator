@@ -30,6 +30,8 @@ app.post('/fileupload', function(req, res){
     // every time a file has been uploaded successfully,
     // rename it to it's orignal name
     form.on('file', function(field, file) {
+        console.log(req.headers.cookies);
+        console.log(req.headers);
         fs.rename(file.path, path.join(form.uploadDir, file.name), function () {
 
         });
@@ -71,6 +73,7 @@ connection.connect(function(err){
     if(!err) {
         console.log("Database is connected");
     } else {
+        console.log(err);
         console.log("Error while connecting with database");
     }
 });
