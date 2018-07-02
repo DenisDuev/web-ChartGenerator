@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser=require('body-parser');
-const mysql = require('mysql');
+var mysql = require('mysql');
 var app = express();
 
 app.use(bodyParser.urlencoded({extended:true}));
@@ -27,7 +27,9 @@ function getValueOfStringCookie(sCookie, sKey) {
 }
 
 app.get('/*', function(req, res, next){
-    if (req.url === '/' || req.url === '/login.html' || req.url === '/css/styles.css' || req.url === '/createuserstable') return next();
+    if (req.url === '/' || req.url === '/login.html' || req.url === '/css/styles.css'
+        || req.url === '/createuserstable'
+    || req.url === "/registration.html") return next();
     var username = getValueOfStringCookie(req.headers.cookie, "username=");
     var password = getValueOfStringCookie(req.headers.cookie, "password=");
     //console.log(username + " " + password);
