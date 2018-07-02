@@ -168,6 +168,10 @@ div.container {
     height: 65vh;
     margin: 2% auto auto;
 }
+#content {
+   margin-left: 3%;
+   margin-right: 3%;
+}
 
 span {
     color: white;

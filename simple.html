@@ -26,16 +26,15 @@
     <fieldset id="radioFieldset">
         <legend>Select a column</legend>
     </fieldset>
+    <label for="numberColumnsSlider">Select number of rows:</label><br>
+    <input id="numberColumnsSlider" type="range" min="1" onchange="changeSlider()">
+    <label id="sliderLabel"></label>
+    <br>
+    <input id="colorCheckbox" type="checkbox">
+    <label for="colorCheckbox">use colors</label>
+    <br>
+    <button onclick="showChart()">generate</button>
 </div>
-<label for="numberColumnsSlider">Select number of rows:</label><br>
-<input id="numberColumnsSlider" type="range" min="1" onchange="changeSlider()">
-<label id="sliderLabel"></label>
-<br>
-<input id="colorCheckbox" type="checkbox">
-<label for="colorCheckbox">use colors</label>
-<br>
-<button onclick="showChart()">generate</button>
-
 <div class="chart-container" style="position: relative; height:40vh; width:50vw; margin-left: 20%; margin-right: 20%">
     <canvas id="myChart"></canvas>
 </div>
