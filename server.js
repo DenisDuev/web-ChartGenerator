@@ -125,7 +125,7 @@ function initDb() {
     newConnection.query(sql, (err, result, fields) => {
         if(err) {
             console.log(err);
-        }
+        };
     console.log(result);
     connection.connect();
     });
@@ -145,9 +145,11 @@ module.exports = connection;
 
 // Create DB
 app.get('/createdb', (req, res) => {
-    let sql = 'CREATE DATABASE mydb';
+    var sql = 'CREATE DATABASE mydb';
     connection.query(sql, (err, result, fields) => {
-        if(err) throw err;
+        if(err) {
+            console.log(err);
+        };
         console.log(result);
         res.send('Database created...');
     });
@@ -155,12 +157,14 @@ app.get('/createdb', (req, res) => {
 
 // Create table
 app.get('/createuserstable', (req, res) => {
-    let sql = 'CREATE TABLE users(id int(11) NOT NULL AUTO_INCREMENT, username varchar(255) NOT NULL, password varchar(255) NOT NULL, created_at datetime NOT NULL, updated_at datetime NOT NULL, PRIMARY KEY (id))';
+    var sql = 'CREATE TABLE users(id int(11) NOT NULL AUTO_INCREMENT, username varchar(255) NOT NULL, password varchar(255) NOT NULL, created_at datetime NOT NULL, updated_at datetime NOT NULL, PRIMARY KEY (id))';
     connection.query(sql, (err, result, fields) => {
-        if(err) throw err;
+        if(err) {
+            console.log(err);
+        }
         console.log(result);
         res.send('Users table created...');
-    });
+})
 });
 
 var authenticate = require('./javascript/authenticate');
