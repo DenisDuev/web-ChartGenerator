@@ -23,7 +23,7 @@ function convert(sUrl, callBack) {
             callBack(result);
         }
     };
-    xhttp.open("GET", "testData/" + sUrl, true);
+    xhttp.open("GET", sUrl, true);
     xhttp.send();
 }
 
@@ -34,6 +34,6 @@ function getJsonFile(sUrl, callBack) {
             callBack(JSON.parse(this.responseText));
         }
     };
-    xhttp.open("GET", "testData/" + sUrl, true);
+    xhttp.open("GET", sUrl, true);
     xhttp.send();
 }

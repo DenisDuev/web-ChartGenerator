@@ -85,9 +85,9 @@
     function showChart() {
         var sFileName = getFileName();
         if (sFileName.endsWith(".csv")) {
-            convert(sFileName, displayChart)
+            convert("testData/" + sFileName, displayChart)
         } else {
-            getJsonFile(sFileName, displayChart);
+            getJsonFile("testData/" + sFileName, displayChart);
         }
 
     }

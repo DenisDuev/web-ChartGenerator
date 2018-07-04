@@ -66,6 +66,9 @@ function initRequests(){
 }
 
 initRequests();
+app.get("/secret.html",function(req, res){
+    res.sendFile(path.join(__dirname, "/secret.html"));
+});
 
 app.get('/files', function (req, res) {
     fs.readdir("fileupload", function(err, items) {
@@ -83,9 +86,10 @@ app.get('/files', function (req, res) {
     });
 });
 
-
 app.get('/*', function(req, res, next){
-
+    if (req.url.includes("secret.html") || req.url.includes("files_secret")){
+        return next();
+    }
     var username = getValueOfStringCookie(req.headers.cookie, "username=");
     var password = getValueOfStringCookie(req.headers.cookie, "password=");
     //console.log(username + " " + password);

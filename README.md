@@ -15,3 +15,10 @@ Sofia University, Faculty of Mathematics and Informatics
 - stop server, make GET request to /createuserstable, start server
 
 Now you only need to register in the application or use admin/admin
+
+##Special
+
+You can use the app without registration. How to do that?
+- in filesystem place desired files under *files_secret* folder
+- call <host>:<post>/secret.html/type={type}&file={file.extension}
+and you can make the desired diagram without login
