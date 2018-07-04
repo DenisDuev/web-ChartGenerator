@@ -47,7 +47,7 @@
         var chart = createChart();
         var numOfRows = getNumberOfRows();
         chart.onInit("area");
-        chart.addLabels(getDataForColumn(aData, getFirstColumn(aData[0]), numOfRows));
+        chart.addLabels(getLabelsForColumn(aData, getFirstColumn(aData[0]), numOfRows));
 
         var columns = aData[0];
         var index = 0;

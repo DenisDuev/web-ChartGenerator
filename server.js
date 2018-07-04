@@ -1,6 +1,20 @@
+// Create connection
+var sHost = "localhost";
+var sUser = "root";
+var sPassword = "";
+var sDatabase = "mydb";
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+    host     : sHost,
+    user     : sUser,
+    password : sPassword,
+    database : sDatabase
+});
+
+
 var express = require('express');
 var bodyParser=require('body-parser');
-var mysql = require('mysql');
+
 var app = express();
 
 app.use(bodyParser.urlencoded({extended:true}));
@@ -26,10 +40,52 @@ function getValueOfStringCookie(sCookie, sKey) {
     }
 }
 
+app.get('/', function(req, res){
+    res.sendFile(path.join(__dirname, 'login.html'));
+});
+
+function initRequests(){
+    var aRequests = [
+        "/javascript/authenticate.js",
+        "/javascript/chartGenerator.js",
+        "/javascript/convertCSVtoJSON.js",
+        "/javascript/menu.js",
+        "/javascript/registration.js",
+        "/javascript/submit.js",
+        "/javascript/utils.js",
+        "/javascript/wizard.js",
+        "/css/styles.css",
+        "/css/styles.css",
+    ];
+
+    aRequests.forEach(a => {
+        app.get(a,function(req, res){
+            res.sendFile(path.join(__dirname, a));
+        });
+    })
+}
+
+initRequests();
+
+app.get('/files', function (req, res) {
+    fs.readdir("fileupload", function(err, items) {
+        var username = getValueOfStringCookie(req.headers.cookie, "username=");
+        var result = [];
+        for (var i in items){
+            var item = items[i];
+            if (item.includes(username)) {
+                item =
+                    result.push(item.replace(username + "_", ""));
+            }
+        }
+        res.write(JSON.stringify(result));
+        res.end();
+    });
+});
+
+
 app.get('/*', function(req, res, next){
-    if (req.url === '/' || req.url === '/login.html' || req.url === '/css/styles.css'
-        || req.url === '/createuserstable'
-    || req.url === "/registration.html") return next();
+
     var username = getValueOfStringCookie(req.headers.cookie, "username=");
     var password = getValueOfStringCookie(req.headers.cookie, "password=");
     //console.log(username + " " + password);
@@ -42,16 +98,12 @@ app.get('/*', function(req, res, next){
             res.end();
         } else {
             if (results.length > 0) {
-               next();
+                return next();
             } else {
-                res.redirect("login.html");
+                res.sendFile(path.join(__dirname, "login.html"));
             }
         }
     });
-});
-
-app.get('/', function(req, res){
-    res.sendFile(path.join(__dirname, 'login.html'));
 });
 app.post('/fileupload', function(req, res){
 
@@ -87,38 +139,14 @@ app.post('/fileupload', function(req, res){
 
 });
 
-app.get('/files', function (req, res) {
-    fs.readdir("fileupload", function(err, items) {
-        var username = getValueOfStringCookie(req.headers.cookie, "username=");
-        var result = [];
-        for (var i in items){
-            var item = items[i];
-            if (item.includes(username)) {
-                item =
-                result.push(item.replace(username + "_", ""));
-            }
-        }
-        res.write(JSON.stringify(result));
-        res.end();
-    });
-});
-
 app.use(express.static(path.join(__dirname, '')));
-
-// Create connection
-var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'mydb'
-});
 
 function initDb() {
     console.log("init db");
     var newConnection = mysql.createConnection({
-        host     : 'localhost',
-        user     : 'root',
-        password : ''
+        host     : sHost,
+        user     : sUser,
+        password : sPassword
     });
 
     var sql = 'CREATE DATABASE mydb';

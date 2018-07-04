@@ -50,6 +50,20 @@ function getDataForColumn(oData, sColumn, iSize) {
     return aData;
 }
 
+function getLabelsForColumn(oData, sColumn, iSize) {
+    if (!iSize){
+        iSize = oData.length;
+    }
+    var aData = [];
+    for (var i = 1; i < oData.length && i <= iSize; i++) {
+        var chunk = oData[i];
+        var sLabel = chunk[sColumn];
+        aData.push(sLabel);
+    }
+
+    return aData;
+}
+
 function changeSlider() {
     var sliderLabel = document.getElementById("sliderLabel");
     sliderLabel.innerText = document.getElementById("numberColumnsSlider").value;

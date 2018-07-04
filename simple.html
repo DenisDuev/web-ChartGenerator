@@ -53,7 +53,7 @@
             aColors = generateColors(numOfRows);
         }
         chart.onInit(getTypeOfChart());
-        chart.addLabels(getDataForColumn(aData, getFirstColumn(aData[0]), numOfRows));
+        chart.addLabels(getLabelsForColumn(aData, getFirstColumn(aData[0]), numOfRows));
         chart.addDataset(
             0,
             getDataForColumn(aData, getCheckedRadioKey(aData), numOfRows),
