@@ -243,3 +243,13 @@ button {
 input[type=text]:focus {
     border-color:#333;
 }
+
+div.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(120, 164, 64);
+    color: white;
+    text-align: center;
+}
