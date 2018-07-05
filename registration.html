@@ -65,7 +65,7 @@
                 var res = JSON.parse(data);
                 if (res.status === true) {
                     var location = window.location.href;
-                    window.location.href = location.replace("/registration", "/home");
+                    window.location.href = location.replace("/registration", "/login");
                     alert("registration successful");
                 } else {
                     alert("registration failed");

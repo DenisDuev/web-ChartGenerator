@@ -12,7 +12,7 @@ Sofia University, Faculty of Mathematics and Informatics
 - start the applicatiom using node js (either your or node.exe file) -> *node server.js*
 ### setup db:
 - you can import **mydb.sql** file or 
-- stop server, make GET request to /createuserstable, start server
+- stop server, start it again (when the server is started, it created new db and then creates tables, you only need to restart the connection)
 
 Now you only need to register in the application or use admin/admin
 
@@ -22,6 +22,8 @@ You can use the app without registration. How to do that?
 - in filesystem place desired files under *files_secret* folder
 - call <host>:<post>/secret.html/type={type}&file={file.extension}
 and you can make the desired diagram without login
+
+possible types are: line, bar, pie, doughnut
 
 This project uses [ChartJS](https://www.chartjs.org/)
 

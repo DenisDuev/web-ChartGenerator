@@ -7,7 +7,6 @@
     <script src="javascript/menu.js"></script>
     <script src="javascript/submit.js"></script>
     <script src="javascript/utils.js"></script>
-    <script src="javascript/authenticate.js"></script>
 </head>
 <body>
 <div class="header">
@@ -51,7 +50,7 @@
             "password": pass
         });
         $.ajax({
-            url: '/javascript/authenticate',
+            url: '/authenticate',
             type: 'POST',
             data: data,
             contentType: "application/json; charset=utf-8",

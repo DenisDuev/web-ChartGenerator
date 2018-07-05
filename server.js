@@ -4,20 +4,14 @@ var sUser = "root";
 var sPassword = "";
 var sDatabase = "mydb";
 var mysql = require('mysql');
-var connection = mysql.createConnection({
-    host     : sHost,
-    user     : sUser,
-    password : sPassword,
-    database : sDatabase
-});
-
+var connection = undefined;
 
 var express = require('express');
-var bodyParser=require('body-parser');
+var bodyParser = require('body-parser');
 
 var app = express();
 
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 var http = require('http');
@@ -27,24 +21,24 @@ var path = require('path');
 var formidable = require('formidable');
 
 function getValueOfStringCookie(sCookie, sKey) {
-    if (!sCookie){
+    if (!sCookie) {
         return "";
     }
     var cut = sCookie.split(" ");
     //console.log(cut);
-    for (var e in cut){
+    for (var e in cut) {
         //console.log(cut[e]);
-        if (cut[e].includes(sKey)){
+        if (cut[e].includes(sKey)) {
             return cut[e].split("=")[1];
         }
     }
 }
 
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'login.html'));
 });
 
-function initRequests(){
+function initRequests() {
     var aRequests = [
         "/javascript/authenticate.js",
         "/javascript/chartGenerator.js",
@@ -59,22 +53,22 @@ function initRequests(){
     ];
 
     aRequests.forEach(a => {
-        app.get(a,function(req, res){
+        app.get(a, function (req, res) {
             res.sendFile(path.join(__dirname, a));
         });
     })
 }
 
 initRequests();
-app.get("/secret.html",function(req, res){
+app.get("/secret.html", function (req, res) {
     res.sendFile(path.join(__dirname, "/secret.html"));
 });
 
 app.get('/files', function (req, res) {
-    fs.readdir("fileupload", function(err, items) {
+    fs.readdir("fileupload", function (err, items) {
         var username = getValueOfStringCookie(req.headers.cookie, "username=");
         var result = [];
-        for (var i in items){
+        for (var i in items) {
             var item = items[i];
             if (item.includes(username)) {
                 item =
@@ -86,8 +80,11 @@ app.get('/files', function (req, res) {
     });
 });
 
-app.get('/*', function(req, res, next){
-    if (req.url.includes("secret.html") || req.url.includes("files_secret")){
+app.get('/*', function (req, res, next) {
+    if (req.url.includes("secret.html")
+        || req.url.includes("files_secret")
+        || req.url === "/createuserstable"
+        || req.url === "/registration.html") {
         return next();
     }
     var username = getValueOfStringCookie(req.headers.cookie, "username=");
@@ -109,7 +106,7 @@ app.get('/*', function(req, res, next){
         }
     });
 });
-app.post('/fileupload', function(req, res){
+app.post('/fileupload', function (req, res) {
 
     // create an incoming form object
     var form = new formidable.IncomingForm();
@@ -121,7 +118,7 @@ app.post('/fileupload', function(req, res){
 
     // every time a file has been uploaded successfully,
     // rename it to it's orignal name
-    form.on('file', function(field, file) {
+    form.on('file', function (field, file) {
         var username = getValueOfStringCookie(req.headers.cookie, "username=");
         fs.rename(file.path, path.join(form.uploadDir, username + "_" + file.name), function () {
 
@@ -129,12 +126,12 @@ app.post('/fileupload', function(req, res){
     });
 
     // log any errors that occur
-    form.on('error', function(err) {
+    form.on('error', function (err) {
         console.log('An error has occured: \n' + err);
     });
 
     // once all the files have been uploaded, send a response to the client
-    form.on('end', function() {
+    form.on('end', function () {
         res.end('success');
     });
 
@@ -148,63 +145,85 @@ app.use(express.static(path.join(__dirname, '')));
 function initDb() {
     console.log("init db");
     var newConnection = mysql.createConnection({
-        host     : sHost,
-        user     : sUser,
-        password : sPassword
+        host: sHost,
+        user: sUser,
+        password: sPassword
     });
 
     var sql = 'CREATE DATABASE mydb';
     newConnection.query(sql, (err, result, fields) => {
-        if(err) {
+        if (err) {
             console.log(err);
-        };
-    console.log(result);
-    connection.connect();
+        } else {
+            console.log(result);
+            connectToDb();
+            createUsersTable();
+        }
     });
 }
 
-// Connect
-connection.connect(function(err){
-    if(!err) {
-        console.log("Database is connected");
-    } else {
-        initDb();
-        console.log("Error while connecting with database");
-    }
-});
-module.exports = connection;
+function connectToDb(callBack) {
+    connection = mysql.createConnection({
+        host: sHost,
+        user: sUser,
+        password: sPassword,
+        database: sDatabase
+    });
 
+    connection.connect(function (err) {
+        if (!err) {
+            console.log("Database is connected");
+        } else {
+            console.log("Error while connecting with database");
+            if(callBack) callBack();
+        }
+    }.bind(this));
+}
+
+// Connect
+connectToDb(initDb);
+module.exports = connection;
 
 // Create DB
 app.get('/createdb', (req, res) => {
     var sql = 'CREATE DATABASE mydb';
     connection.query(sql, (err, result, fields) => {
-        if(err) {
+        if (err) {
             console.log(err);
-        };
+        }
+        ;
         console.log(result);
         res.send('Database created...');
     });
 });
 
-// Create table
 app.get('/createuserstable', (req, res) => {
+    createUsersTable(req, res);
+});
+function createUsersTable(req, res) {
+    console.log("creating users querry");
     var sql = 'CREATE TABLE users(id int(11) NOT NULL AUTO_INCREMENT, username varchar(255) NOT NULL, password varchar(255) NOT NULL, created_at datetime NOT NULL, updated_at datetime NOT NULL, PRIMARY KEY (id))';
     connection.query(sql, (err, result, fields) => {
-        if(err) {
+        if (err) {
+            if (res){
+                res.send("something went wrong with query");
+            }
             console.log(err);
+        } else {
+            console.log(result);
+            if (res){
+                res.send('Users table created...');
+            }
         }
-        console.log(result);
-        res.send('Users table created...');
-})
-});
+    })
+}
 
-var authenticate = require('./javascript/authenticate');
 var registration = require('./javascript/registration');
-
+var authentication = require('./javascript/authenticate');
 app.post('/javascript/registration', registration.register);
-app.post('/javascript/authenticate',authenticate.authenticate);
+app.post('/authenticate', authentication.authenticate);
 
-var server = app.listen(8080, function(){
+
+var server = app.listen(8080, function () {
     console.log('Server listening on port 8080');
 });
